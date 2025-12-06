@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results - SymptomScan | Health Report</title>
+    <meta name="description" content="View your disease prediction results with confidence scores, medications, diet recommendations, and precautions. ML-powered health analysis.">
+    <meta name="keywords" content="health prediction results, disease diagnosis report, medical recommendations, machine learning">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">🏥</span>
+            <span>SymptomScan</span>
+        </div>
+        <div class="nav-menu">
+            <a href="dashboard.html">Home</a>
+            <a href="symptoms.html">Symptoms</a>
+            <a href="history.html">History</a>
+            <a href="profile.html">Profile</a>
+            <a href="about.html">About</a>
+            <button onclick="Storage.logout()" class="btn btn-outline">Logout</button>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </nav>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="container loading-state">
+        <div class="loading-content">
+            <div class="loader custom-loader"></div>
+            <h2>Analyzing Your Symptoms...</h2>
+            <p class="loading-text">Please wait while our AI processes your data</p>
+        </div>
+    </div>
+
+    <!-- Result Container -->
+    <div id="resultContainer" class="container result-container" style="display:none;">
+
+        <!-- Disease Card -->
+        <div class="result-card">
+            <div class="emoji" id="diseaseEmoji">🏥</div>
+            <h2 id="diseaseName">Loading...</h2>
+
+            <p class="confidence-text">
+                Confidence: <span id="confidence" class="confidence-value">0%</span>
+            </p>
+
+            <div class="confidence-bar">
+                <div class="confidence-fill" id="confidenceFill"></div>
+            </div>
+
+            <p class="model-text">
+                Model Used: <span id="modelUsed">N/A</span>
+            </p>
+        </div>
+
+        <!-- Description Card -->
+        <div class="info-card">
+            <h3>📋 Description</h3>
+            <p id="description" class="info-text">Loading description...</p>
+        </div>
+
+        <!-- Symptoms Card -->
+        <div class="info-card">
+            <h3>🩺 Your Symptoms</h3>
+            <div id="symptomsList" class="symptoms-list"></div>
+        </div>
+
+        <!-- Medications Card -->
+        <div class="info-card" id="medicationsCard">
+            <h3>💊 Recommended Medications</h3>
+            <ul id="medicationsList"></ul>
+        </div>
+
+        <!-- Precautions Card -->
+        <div class="info-card" id="precautionsCard">
+            <h3>⚠️ Precautions</h3>
+            <ul id="precautionsList"></ul>
+        </div>
+
+        <!-- Diet Card -->
+        <div class="info-card" id="dietCard">
+            <h3>🥗 Diet Recommendations</h3>
+            <ul id="dietList"></ul>
+        </div>
+
+        <!-- Workout Card -->
+        <div class="info-card" id="workoutCard">
+            <h3>🏃 Workout & Exercise</h3>
+            <ul id="workoutList"></ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button onclick="newCheck()" class="btn btn-primary action-btn">🔄 New Check</button>
+            <button onclick="goToHome()" class="btn btn-secondary action-btn">🏠 Back to Home</button>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer-box">
+            <p class="disclaimer-text">
+                <strong>⚠️ Medical Disclaimer:</strong> This prediction is for informational purposes only and should not be considered as medical advice. Please consult with a qualified healthcare professional for proper diagnosis and treatment.
+            </p>
+        </div>
+
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/result.js"></script>
+</body>
+
+</html>

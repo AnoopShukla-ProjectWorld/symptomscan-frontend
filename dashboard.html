@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SymptomScan | Your Health Hub</title>
+    <meta name="description" content="Access your SymptomScan dashboard. View prediction history, analyze symptoms, and manage your health data in one place.">
+    <meta name="keywords" content="health dashboard, disease prediction tracker, symptom history, ML diagnosis">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">🏥</span>
+            <span>SymptomScan</span>
+        </div>
+        <div class="nav-menu">
+            <a href="dashboard.html" class="active">Home</a>
+            <a href="history.html">History</a>
+            <a href="profile.html">Profile</a>
+            <a href="about.html">About</a>
+            <button onclick="Storage.logout()" class="btn btn-outline">Logout</button>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Welcome Back, <span id="userName">User</span>! 👋</h1>
+            <p>Check your health status by selecting symptoms</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <h3 id="totalPredictions">0</h3>
+                    <p>Total Predictions</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-content">
+                    <h3 id="lastCheck">Never</h3>
+                    <p>Last Check</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-content">
+                    <h3>85%+</h3>
+                    <p>Accuracy Rate</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="actions-grid">
+            <div class="action-card" onclick="location.href='symptoms.html'">
+                <div class="action-icon">🩺</div>
+                <h3>New Check</h3>
+                <p>Start symptom analysis</p>
+            </div>
+
+            <div class="action-card" onclick="location.href='history.html'">
+                <div class="action-icon">📋</div>
+                <h3>History</h3>
+                <p>View past predictions</p>
+            </div>
+
+            <div class="action-card" onclick="location.href='profile.html'">
+                <div class="action-icon">👤</div>
+                <h3>Profile</h3>
+                <p>Manage your account</p>
+            </div>
+
+            <div class="action-card" onclick="location.href='about.html'">
+                <div class="action-icon">ℹ️</div>
+                <h3>About</h3>
+                <p>App information</p>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-section">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">🔍</span>
+                    <h4>133 Symptoms</h4>
+                    <p>Comprehensive symptom database</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🤖</span>
+                    <h4>AI Powered</h4>
+                    <p>Machine learning prediction</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💊</span>
+                    <h4>Medications</h4>
+                    <p>Personalized suggestions</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🥗</span>
+                    <h4>Diet & Exercise</h4>
+                    <p>Health recommendations</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SymptomScan | ML Disease Prediction</title>
+    <meta name="description" content="Login to SymptomScan - Machine Learning powered disease prediction system. Check your symptoms and get instant health predictions.">
+    <meta name="keywords" content="disease prediction login, symptom checker, health diagnosis, machine learning">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="logo">🏥</div>
+                <h1>SymptomScan</h1>
+                <p>Disease Prediction & Health Assistant</p>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="Enter your email">
+                    <span class="error-message" id="emailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="Enter your password">
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="loginBtn">
+                    <span id="btnText">Login</span>
+                    <span id="btnLoader" class="loader hidden"></span>
+                </button>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

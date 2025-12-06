@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - SymptomScan | Account Settings</title>
+    <meta name="description" content="Manage your SymptomScan profile. Update personal information, change password, and view account settings.">
+    <meta name="keywords" content="health profile, account settings, user profile, health dashboard">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">🏥</span>
+            <span>SymptomScan</span>
+        </div>
+        <div class="nav-menu">
+            <a href="dashboard.html">Home</a>
+            <a href="history.html">History</a>
+            <a href="profile.html" class="active">Profile</a>
+            <a href="about.html">About</a>
+            <button onclick="Storage.logout()" class="btn btn-outline">Logout</button>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </nav>
+
+    <div class="container" style="max-width: 800px;">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-avatar" id="avatar"></div>
+            <h2 id="userName">Loading...</h2>
+            <p id="userEmail">loading@email.com</p>
+            <p>Member since: <span id="memberSince">2024</span></p>
+        </div>
+
+        <!-- Profile Menu -->
+        <div class="profile-menu">
+            <div class="profile-menu-item" onclick="editProfile()">
+                <div class="left">
+                    <span class="icon">✏️</span>
+                    <div>
+                        <strong>Edit Profile</strong>
+                        <p>Update your name and email</p>
+                    </div>
+                </div>
+                <span style="color: var(--text-secondary);">›</span>
+            </div>
+
+            <div class="profile-menu-item" onclick="changePassword()">
+                <div class="left">
+                    <span class="icon">🔒</span>
+                    <div>
+                        <strong>Change Password</strong>
+                        <p>Update your password</p>
+                    </div>
+                </div>
+                <span style="color: var(--text-secondary);">›</span>
+            </div>
+
+            <div class="profile-menu-item" onclick="window.location.href='history.html'">
+                <div class="left">
+                    <span class="icon">📋</span>
+                    <div>
+                        <strong>Prediction History</strong>
+                        <p>View all your past predictions</p>
+                    </div>
+                </div>
+                <span style="color: var(--text-secondary);">›</span>
+            </div>
+
+            <div class="profile-menu-item" onclick="window.location.href='about.html'">
+                <div class="left">
+                    <span class="icon">ℹ️</span>
+                    <div>
+                        <strong>About App</strong>
+                        <p>App information and details</p>
+                    </div>
+                </div>
+                <span style="color: var(--text-secondary);">›</span>
+            </div>
+
+            <div class="profile-menu-item" onclick="logout()">
+                <div class="left">
+                    <span class="icon">🚪</span>
+                    <div>
+                        <strong class="text-danger">Logout</strong>
+                        <p>Sign out of your account</p>
+                    </div>
+                </div>
+                <span style="color: var(--text-secondary);">›</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

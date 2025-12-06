@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - SymptomScan | ML Disease Prediction System</title>
+    <meta name="description" content="Learn about SymptomScan - Machine Learning powered disease prediction system with 133 symptoms, 41 diseases, SVM, Random Forest, and Naive Bayes models.">
+    <meta name="keywords" content="symptom checker about, disease prediction system, machine learning health, medical technology, SVM, Random Forest">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">🏥</span>
+            <span>SymptomScan</span>
+        </div>
+        <div class="nav-menu">
+            <a href="dashboard.html">Home</a>
+            <a href="history.html">History</a>
+            <a href="profile.html">Profile</a>
+            <a href="about.html" class="active">About</a>
+            <button onclick="Storage.logout()" class="btn btn-outline">Logout</button>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </nav>
+
+    <div class="container about-container">
+        <!-- App Info -->
+        <div class="app-info-card">
+            <div class="app-icon">🏥</div>
+            <h1>SymptomScan</h1>
+            <p class="subtitle">Disease Prediction & Health Assistant</p>
+            <p class="version">Version 1.0.0</p>
+        </div>
+
+        <!-- Features -->
+        <div class="info-card">
+            <h3>✨ Key Features</h3>
+            <ul class="features-list">
+                <li>🔍 <strong>133 Symptoms Database</strong> - Comprehensive symptom library</li>
+                <li>🤖 <strong>AI-Powered Predictions</strong> - Machine learning models (SVM, Random Forest, Naive Bayes)</li>
+                <li>🎯 <strong>41 Disease Categories</strong> - Wide range of health conditions</li>
+                <li>💊 <strong>Personalized Recommendations</strong> - Medications, diet, and workout advice</li>
+                <li>📊 <strong>Confidence Scoring</strong> - Transparent prediction accuracy</li>
+                <li>📋 <strong>Prediction History</strong> - Track your health journey</li>
+            </ul>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="info-card">
+            <h3>🛠️ Technology Stack</h3>
+            <div class="tech-stack">
+                <p><strong>Backend:</strong> Python Flask, SQLite, Scikit-learn</p>
+                <p><strong>Frontend:</strong> HTML5, CSS3, JavaScript (ES6+)</p>
+                <p><strong>ML Models:</strong> SVM, Random Forest, Naive Bayes</p>
+                <p><strong>API:</strong> RESTful architecture with JSON responses</p>
+            </div>
+        </div>
+
+        <!-- Medical Disclaimer -->
+        <div class="warning-box">
+            <h3>⚠️ Medical Disclaimer</h3>
+            <p>
+                This application is for educational and informational purposes only. It is NOT a substitute for professional medical advice, diagnosis, or treatment. 
+                Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. 
+                Never disregard professional medical advice or delay seeking it because of something you have read or received from this application.
+                In case of emergency, please contact your local emergency services immediately.
+            </p>
+        </div>
+
+        <!-- Privacy -->
+        <div class="info-card">
+            <h3>🔒 Privacy & Data</h3>
+            <p>
+                We collect only basic user information (name, email) for account purposes. 
+                Your symptom selections and predictions are stored securely and are never shared with third parties. 
+                All passwords are hashed and encrypted. You can delete your account and all associated data at any time.
+            </p>
+        </div>
+
+        <!-- Contact -->
+        <div class="info-card">
+            <h3>📧 Contact & Support</h3>
+            <p>
+                For support, feedback, or inquiries:<br>
+                Email: support@symptomscan.com<br>
+                Report issues or suggest new features
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-text">
+            <p>© 2024-2025 SymptomScan</p>
+            <p>All rights reserved</p>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/about.js"></script>
+</body>
+</html>
