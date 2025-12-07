@@ -50,3 +50,7 @@ document.addEventListener('click', (e) => {
         navMenu.classList.remove('active');
     }
 });
+
+window.addEventListener("historyUpdated", () => {
+    loadStats();
+});

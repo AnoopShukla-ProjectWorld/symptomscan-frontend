@@ -150,31 +150,37 @@ function viewHistoryDetail(index) {
 async function deleteHistory(event, id, index) {
     event.stopPropagation();
     
-    if (!confirm('Are you sure you want to delete this prediction?')) {
-        return;
-    }
+    if (!confirm('Are you sure you want to delete this prediction?')) return;
 
     try {
-        await apiCall(`${API_CONFIG.ENDPOINTS.DELETE_HISTORY}/${id}`, 'DELETE');
-        
-        // Remove from arrays
+        const response = await apiCall(`${API_CONFIG.ENDPOINTS.DELETE_HISTORY}/${id}`, 'DELETE');
+
+        if (response.status !== 'success') {
+            alert('Failed to delete prediction');
+            return;
+        }
+
+        // Remove item from local arrays
         allHistory = allHistory.filter(item => item.id !== id);
         filteredHistory = filteredHistory.filter(item => item.id !== id);
-        
-        // Update localStorage to match actual count
-        localStorage.setItem('totalPredictions', allHistory.length.toString());
-        
+
+        // Update UI immediately
         displayHistory(filteredHistory);
-        
+
+        // Update count in localStorage
+        localStorage.setItem('totalPredictions', allHistory.length.toString());
+
+        // Update Dashboard instantly if open in another screen
+        window.dispatchEvent(new Event("historyUpdated"));
+
+        // Empty state if needed
         if (allHistory.length === 0) {
             document.getElementById('historyList').style.display = 'none';
             document.getElementById('emptyState').style.display = 'block';
-            localStorage.setItem('totalPredictions', '0');
         }
-        
-        alert('Prediction deleted successfully');
+
     } catch (error) {
-        alert('Failed to delete prediction');
-        console.error('Delete error:', error);
+        console.error("Delete Error:", error);
+        alert("Failed to delete prediction");
     }
 }
