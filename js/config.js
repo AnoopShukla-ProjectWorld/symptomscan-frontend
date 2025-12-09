@@ -1,7 +1,7 @@
 // js/config.js
 const API_CONFIG = {
-    BASE_URL: 'http://localhost:5000',
-    // BASE_URL: 'https://symptomscan-backend.onrender.com',
+    // BASE_URL: 'http://localhost:5000',
+    BASE_URL: 'https://symptomscan-backend.onrender.com',
     ENDPOINTS: {
         LOGIN: '/api/login',
         REGISTER: '/api/register',
