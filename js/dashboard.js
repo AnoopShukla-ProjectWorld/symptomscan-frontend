@@ -1,56 +1,51 @@
 // js/dashboard.js
 
-// Check authentication
-if (!checkAuth()) {
-    window.location.href = 'index.html';
-}
-
 // Load user data
-const user = Storage.getUser();
-if (user) {
-    document.getElementById('userName').textContent = user.name;
-}
+window.addEventListener('DOMContentLoaded', function () {
+    const user = Storage.getUser();
+    if (user) {
+        document.getElementById('userName').textContent = user.name;
+    }
 
-// Load stats from backend and localStorage
-loadStats();
+    // Load stats from database
+    loadStats();
+});
 
 async function loadStats() {
+    const user = Storage.getUser();
+
+    if (!user || !user.id) {
+        console.error('No user data');
+        return;
+    }
+
     try {
         // Get actual count from backend
         const result = await apiCall(`${API_CONFIG.ENDPOINTS.HISTORY}/${user.id}`);
-        
-        // Set total predictions from actual history count
-        const totalCount = result.history ? result.history.length : 0;
-        localStorage.setItem('totalPredictions', totalCount.toString());
-        document.getElementById('totalPredictions').textContent = totalCount;
+
+        if (result.history) {
+            // Set total predictions from actual history count
+            const totalCount = result.history.length;
+            // localStorage.setItem('totalPredictions', totalCount.toString());
+            document.getElementById('totalPredictions').textContent = totalCount;
+
+            // Get last check date if history exists
+            if (totalCount > 0) {
+                const lastDate = result.history[0].date;
+                const formatted = new Date(lastDate).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+                document.getElementById('lastCheck').textContent = formatted;
+            } else {
+                document.getElementById('lastCheck').textContent = 'Never';
+            }
+        }
     } catch (error) {
-        // Fallback to localStorage if backend fails
         console.error('Error fetching history count:', error);
-        const stats = localStorage.getItem('totalPredictions') || '0';
-        document.getElementById('totalPredictions').textContent = stats;
+        // Default values on error
+        document.getElementById('totalPredictions').textContent = '0';
+        document.getElementById('lastCheck').textContent = 'Never';
     }
-    
-    // Get last check from localStorage
-    const lastCheck = localStorage.getItem('lastCheck') || 'Never';
-    document.getElementById('lastCheck').textContent = lastCheck;
 }
-
-// Mobile menu toggle
-function toggleMenu() {
-    const navMenu = document.querySelector('.nav-menu');
-    navMenu.classList.toggle('active');
-}
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    const navMenu = document.querySelector('.nav-menu');
-    const menuToggle = document.querySelector('.menu-toggle');
-    
-    if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-        navMenu.classList.remove('active');
-    }
-});
-
-window.addEventListener("historyUpdated", () => {
-    loadStats();
-});

@@ -2,7 +2,7 @@
 
 // Redirect if already logged in
 if (Storage.isLoggedIn()) {
-    window.location.href = 'dashboard.html';
+    window.location.replace('dashboard.html');
 }
 
 // Signup form handler
@@ -24,7 +24,7 @@ document.getElementById('signupForm')?.addEventListener('submit', async (e) => {
     }
 
     if (!isValidEmail(email)) {
-        showError('emailError', 'Enter a valid email address');
+        showError('emailError', 'Enter a valid email address (example@gmail.com)');
         return;
     }
 
@@ -49,9 +49,10 @@ document.getElementById('signupForm')?.addEventListener('submit', async (e) => {
 
         if (result.success) {
             alert('Account created successfully! Please login.');
-            window.location.href = 'index.html';
+            document.getElementById('signupForm').reset();
+            window.location.replace('index.html');
         } else {
-            alert(result.message || 'Registration failed');
+            showError('emailError', result.message || 'Registration failed');
         }
     } catch (error) {
         alert('Registration failed: ' + error.message);

@@ -1,10 +1,5 @@
 // js/result.js
 
-// Check authentication
-if (!checkAuth()) {
-    window.location.href = 'index.html';
-}
-
 // Get prediction result from sessionStorage
 const predictionResult = sessionStorage.getItem('predictionResult');
 

@@ -1,15 +1,12 @@
 // js/history.js
 
-// Check authentication
-if (!checkAuth()) {
-    window.location.href = 'index.html';
-}
-
 let allHistory = [];
 let filteredHistory = [];
 
 // Load history on page load
-loadHistory();
+window.addEventListener('DOMContentLoaded', function () {
+    loadHistory();
+});
 
 // Search functionality
 document.getElementById('searchHistory')?.addEventListener('input', (e) => {
@@ -39,20 +36,14 @@ async function loadHistory() {
             allHistory = result.history.sort((a, b) => {
                 return new Date(b.date) - new Date(a.date);
             });
-            
+
             filteredHistory = [...allHistory];
             displayHistory(filteredHistory);
             document.getElementById('historyList').style.display = 'block';
             document.getElementById('emptyState').style.display = 'none';
-            
-            // Sync totalPredictions with actual history count
-            localStorage.setItem('totalPredictions', allHistory.length.toString());
         } else {
             document.getElementById('emptyState').style.display = 'block';
             document.getElementById('historyList').style.display = 'none';
-            
-            // Clear predictions count if no history
-            localStorage.setItem('totalPredictions', '0');
         }
     } catch (error) {
         console.error('Error loading history:', error);
@@ -83,11 +74,11 @@ function displayHistory(history) {
 function createHistoryCard(item, index) {
     const card = document.createElement('div');
     card.className = 'history-card';
-    
+
     const emoji = getDiseaseMoji(item.disease);
     const confidence = item.confidence;
     const confidenceColor = confidence >= 80 ? '#4CAF50' : confidence >= 60 ? '#FF9800' : '#F44336';
-    
+
     card.innerHTML = `
         <div style="flex: 1; cursor: pointer;" onclick="viewHistoryDetail(${index})">
             <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
@@ -113,7 +104,7 @@ function createHistoryCard(item, index) {
             🗑️ Delete
         </button>
     `;
-    
+
     return card;
 }
 
@@ -121,7 +112,7 @@ function filterHistory(query) {
     if (query === '') {
         filteredHistory = [...allHistory];
     } else {
-        filteredHistory = allHistory.filter(item => 
+        filteredHistory = allHistory.filter(item =>
             item.disease.toLowerCase().includes(query)
         );
     }
@@ -149,38 +140,33 @@ function viewHistoryDetail(index) {
 
 async function deleteHistory(event, id, index) {
     event.stopPropagation();
-    
-    if (!confirm('Are you sure you want to delete this prediction?')) return;
+
+    if (!confirm('Are you sure you want to delete this prediction?')) {
+        return;
+    }
 
     try {
-        const response = await apiCall(`${API_CONFIG.ENDPOINTS.DELETE_HISTORY}/${id}`, 'DELETE');
+        const result = await apiCall(`${API_CONFIG.ENDPOINTS.DELETE_HISTORY}/${id}`, 'DELETE');
 
-        if (response.status !== 'success') {
-            alert('Failed to delete prediction');
-            return;
+        if (result.status === 'success' || result.success) {
+            // Remove from arrays
+            allHistory = allHistory.filter(item => item.id !== id);
+            filteredHistory = filteredHistory.filter(item => item.id !== id);
+
+            displayHistory(filteredHistory);
+
+            if (allHistory.length === 0) {
+                document.getElementById('historyList').style.display = 'none';
+                document.getElementById('emptyState').style.display = 'block';
+            }
+            alert('Prediction deleted successfully');
         }
-
-        // Remove item from local arrays
-        allHistory = allHistory.filter(item => item.id !== id);
-        filteredHistory = filteredHistory.filter(item => item.id !== id);
-
-        // Update UI immediately
-        displayHistory(filteredHistory);
-
-        // Update count in localStorage
-        localStorage.setItem('totalPredictions', allHistory.length.toString());
-
-        // Update Dashboard instantly if open in another screen
-        window.dispatchEvent(new Event("historyUpdated"));
-
-        // Empty state if needed
-        if (allHistory.length === 0) {
-            document.getElementById('historyList').style.display = 'none';
-            document.getElementById('emptyState').style.display = 'block';
+        else {
+            alert('Failed to delete: ' + (result.message || 'Unknown error'));
         }
-
-    } catch (error) {
-        console.error("Delete Error:", error);
-        alert("Failed to delete prediction");
+    }
+    catch (error) {
+        alert('Failed to delete prediction');
+        console.error('Delete error:', error);
     }
 }

@@ -1,10 +1,11 @@
-if (!checkAuth()) window.location.href = 'index.html';
-
 let allSymptoms = [];
 let selectedSymptoms = [];
 let isPredicting = false;
 
-loadSymptoms();
+// Load on page load
+window.addEventListener('DOMContentLoaded', function() {
+    loadSymptoms();
+});
 
 async function loadSymptoms() {
     document.getElementById('loadingText').textContent = 'Loading...';
@@ -16,9 +17,7 @@ async function loadSymptoms() {
             allSymptoms = result.symptoms;
             displaySymptoms(allSymptoms);
             document.getElementById('loadingText').textContent = `${allSymptoms.length} symptoms available`;
-        } else {
-            throw new Error('Failed to load symptoms');
-        }
+        } 
     } catch (error) {
         alert('Error loading symptoms: ' + error.message);
         document.getElementById('loadingText').textContent = 'Failed to load';
@@ -85,7 +84,7 @@ function toggleSelected() {
 }
 
 // Search functionality
-document.getElementById('searchSymptoms').addEventListener('input', (e) => {
+document.getElementById('searchSymptoms')?.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase();
     const filtered = allSymptoms.filter(s => s.toLowerCase().includes(query));
     displaySymptoms(filtered);
@@ -115,12 +114,15 @@ async function predictDisease() {
     document.getElementById('predictBtn').disabled = true;
     
     try {
+        const user = Storage.getUser();
+
+        //Get Prediction from ML model
         const result = await apiCall(API_CONFIG.ENDPOINTS.PREDICT, 'POST', {
             symptoms: selectedSymptoms
         });
         
         if (result.status === 'success') {
-            const user = Storage.getUser();
+            // const user = Storage.getUser();
             
             // Save prediction to backend - ONLY FROM SYMPTOMS PAGE
             try {
@@ -140,14 +142,6 @@ async function predictDisease() {
                 console.log('Backend save error (non-critical):', err);
             }
             
-            // Update local stats
-            const total = parseInt(localStorage.getItem('totalPredictions') || '0') + 1;
-            localStorage.setItem('totalPredictions', total.toString());
-            
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            localStorage.setItem('lastCheck', dateStr);
-            
             // Save result to sessionStorage - INCLUDE ALL FIELDS
             sessionStorage.setItem('predictionResult', JSON.stringify({
                 disease: result.disease,
@@ -163,18 +157,20 @@ async function predictDisease() {
             
             // Navigate to result page - NO DELAY
             window.location.href = 'result.html';
-        } else {
+        } 
+        else{
             alert('Prediction failed: ' + (result.message || 'Unknown error'));
-            isPredicting = false;
-            document.getElementById('predictText').style.display = 'inline';
-            document.getElementById('predictLoader').classList.add('hidden');
-            document.getElementById('predictBtn').disabled = false;
+            resetPredictButton();
         }
     } catch (error) {
         alert('Error: ' + error.message);
-        isPredicting = false;
-        document.getElementById('predictText').style.display = 'inline';
-        document.getElementById('predictLoader').classList.add('hidden');
-        document.getElementById('predictBtn').disabled = false;
+        resetPredictButton();
     }
+}
+
+function resetPredictButton() {
+    isPredicting = false;
+    document.getElementById('predictText').style.display = 'inline';
+    document.getElementById('predictLoader').classList.add('hidden');
+    document.getElementById('predictBtn').disabled = false;
 }

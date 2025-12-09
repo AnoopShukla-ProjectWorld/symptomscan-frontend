@@ -1,23 +1,36 @@
 // js/profile.js
 
 // Check authentication
-if (!checkAuth()) {
-    window.location.href = 'index.html';
-}
+// if (!checkAuth()) {
+//     window.location.href = 'index.html';
+// }
 
-// Load user data
-const user = Storage.getUser();
-if (user) {
+let user = Storage.getUser();
+
+// Load on page load
+window.addEventListener('DOMContentLoaded', function() {
+    loadProfile();
+});
+
+function loadProfile() {
+    user = Storage.getUser();
+
+    if(!user) {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    // Display user Data
     document.getElementById('userName').textContent = user.name;
     document.getElementById('userEmail').textContent = user.email;
-    
+
     // Set avatar initial
     const initial = user.name.charAt(0).toUpperCase();
     document.getElementById('avatar').textContent = initial;
     
     // Set member since
-    const memberSince = user.memberSince || localStorage.getItem('memberSince') || '2024';
-    document.getElementById('memberSince').textContent = memberSince;
+    const memberSince = user.memberSince || 'Member';
+    document.getElementById('memberSince').textContent = 'Since: ' + memberSince;
 }
 
 function editProfile() {
@@ -50,9 +63,7 @@ async function updateProfile(name, email) {
             Storage.setUser(user);
 
             // Update UI
-            document.getElementById('userName').textContent = name;
-            document.getElementById('userEmail').textContent = email;
-            document.getElementById('avatar').textContent = name.charAt(0).toUpperCase();
+            loadProfile();
 
             alert('Profile updated successfully!');
         } else {
@@ -108,9 +119,4 @@ function logout() {
 
 function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-// Mobile menu toggle
-function toggleMenu() {
-    document.querySelector('.nav-menu').classList.toggle('active');
 }

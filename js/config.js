@@ -1,7 +1,7 @@
 // js/config.js
 const API_CONFIG = {
-    // BASE_URL: 'http://localhost:5000',
-    BASE_URL: 'https://symptomscan-backend.onrender.com',
+    BASE_URL: 'http://localhost:5000',
+    // BASE_URL: 'https://symptomscan-backend.onrender.com',
     ENDPOINTS: {
         LOGIN: '/api/login',
         REGISTER: '/api/register',
@@ -29,13 +29,8 @@ async function apiCall(endpoint, method = 'GET', data = null) {
         options.body = JSON.stringify(data);
     }
 
-    try {
         const response = await fetch(url, options);
         return await response.json();
-    } catch (error) {
-        // console.error('API Error:', error);
-        throw error;
-    }
 }
 
 // Local storage helpers
@@ -44,24 +39,39 @@ const Storage = {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('isLoggedIn', 'true');
     },
+
     getUser: () => {
         const user = localStorage.getItem('user');
         return user ? JSON.parse(user) : null;
     },
+
     isLoggedIn: () => {
         return localStorage.getItem('isLoggedIn') === 'true';
     },
+
     logout: () => {
         localStorage.clear();
-        window.location.href = 'index.html';
+        sessionStorage.clear();
+        window.location.replace('index.html');
     }
 };
 
-// Check authentication
+// Check authentication - USER on every page
 function checkAuth() {
     if (!Storage.isLoggedIn()) {
-        window.location.href = 'index.html';
+        window.location.replace('index.html');
         return false;
     }
     return true;
 }
+
+// Prevent Back Button after logout
+window.addEventListener('load', function() {
+    this.window.history.pushState(null, null, this.location.href);
+})
+
+window.addEventListener('popstate', function() {
+    if (!Storage.isLoggedIn()) {
+        window.location.replace('index.html');
+    } 
+});

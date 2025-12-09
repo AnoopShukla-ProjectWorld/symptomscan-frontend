@@ -1,10 +1,8 @@
 // js/auth.js
 
-// Check if already logged in
-if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
-    if (Storage.isLoggedIn()) {
-        window.location.href = 'dashboard.html';
-    }
+// Redirect if already logged in
+if (Storage.isLoggedIn()) {
+    window.location.replace('dashboard.html');
 }
 
 // Login form handler
@@ -23,7 +21,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
     }
 
     if (!isValidEmail(email)) {
-        showError('emailError', 'Enter a valid email address');
+        showError('emailError', 'Enter a valid email address (example@gmail.com)');
         return;
     }
 
@@ -54,22 +52,20 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
                 memberSince: formatMemberSince(result.user.created_at)
             });
 
+            // Clear form
+            document.getElementById('loginForm').reset();
+
             // Redirect to dashboard
-            window.location.href = 'dashboard.html';
+            window.location.replace('dashboard.html');
         } else {
-            alert(result.message || 'Login failed. Please check your credentials.');
+           showError('emailError', result.message || 'Login failed');
         }
     } catch (error) {
-        alert('Network error: ' + error.message);
+        showError('emailError', 'Network error: ' + error.message);
     } finally {
         showLoading(false);
     }
 });
-
-// Helper functions
-function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
 
 function showError(id, message) {
     const errorElement = document.getElementById(id);

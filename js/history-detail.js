@@ -1,10 +1,5 @@
 // js/history-detail.js
 
-// Check authentication
-if (!checkAuth()) {
-    window.location.href = 'index.html';
-}
-
 // Load detail from sessionStorage
 const detailData = sessionStorage.getItem('historyDetail');
 

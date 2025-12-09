@@ -10,7 +10,16 @@ function toggleMenu() {
 
 // Back button functionality
 function goBack() {
-    window.history.back();
+    const referrer = document.referrer;
+
+    if (referrer.includes('history.html')) {
+        window.location.href = 'history.html';
+    } else if (referrer.includes('dashboard.html')) {
+        window.location.href = 'dashboard.html';
+    } else {
+        // fallback (in case direct open)
+        window.location.href = 'history.html';
+    }
 }
 
 // Close mobile menu when clicking outside
@@ -109,5 +118,6 @@ function getModelShortName(model) {
 
 // Email validation
 function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    return emailPattern.test(email.trim());
 }
