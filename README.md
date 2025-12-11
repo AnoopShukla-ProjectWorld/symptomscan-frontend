@@ -176,18 +176,6 @@ Open any HTML file using:
 
 * Live Server (VS Code)
 * Netlify
-* GitHub Pages
-
----
-
-## 📸 Screenshots
-
-(Add screenshot links here once uploaded)
-
-```
-![Prediction Result](assets/screenshots/result.png)
-![History](assets/screenshots/history.png)
-```
 
 ---
 
